@@ -30,6 +30,34 @@ public class ClinicHistory {
 		// ArrayList
 		medicineRequiredOnDebut = new ArrayList<Medicine>();
 	}
+	public String getAll() {
+		String x = "\nSintomas: " + symptom + "\nDiagnostico: " + diagnosis + "\nEstado" + state
+				+ "\nFecha de ingreso: " + admissionDateOnDebut + "\nMascota: " + petRequiredOnDebut + "\ncliente: "
+				+ clientRequiredOnDebut + "\n precio total de hospitalizacion " + totalHospitalizationPrice
+				+ "\n medicinas " + medicineRequiredOnDebut;
+		return x;
+	}
+
+	public String getAllPlusData() {
+		String x = "\nNombre de la mascota: " + petRequiredOnDebut.getName() + "\nTipo de mascota: "
+				+ petRequiredOnDebut.getAnimalType() + "\nSintomas: " + symptom + "\nDiagnostico: " + diagnosis
+				+ "\nEstado: " + state + "\nFecha de ingreso: " + admissionDateOnDebut.getDay() + "/"
+				+ admissionDateOnDebut.getMonth() + "/" + admissionDateOnDebut.getYear() + "" + "\ncliente: "
+				+ clientRequiredOnDebut.getName();
+		return x;
+	}
+
+	public String saveMedicine(String name, double doseCuantity, double pricePerDose, int frecuencyOfAdministration) {
+		String msg = "Medicina agregada de manera exitosa";
+		Medicine newMedicine = new Medicine(name, doseCuantity, pricePerDose, frecuencyOfAdministration);
+		medicineRequiredOnDebut.add(newMedicine);
+		return msg;
+
+	}
+	
+	public void addMedicine(Medicine medicine) {
+		medicineRequiredOnDebut.add(medicine);
+	}
 
 	// Setters that allows to change variable information in a future
 	public void setState(boolean newState) {
@@ -94,9 +122,7 @@ public class ClinicHistory {
 		return this.medicineRequiredOnDebut;
 	}
 
-	public void addMedicine(Medicine medicine) {
-		medicineRequiredOnDebut.add(medicine);
-	}
+	
 
 	public long getTotalHospitalizationPrice() {
 		return this.totalHospitalizationPrice;
@@ -106,29 +132,6 @@ public class ClinicHistory {
 		return this.summary;
 	}
 
-	public String getAll() {
-		String x = "\nSintomas: " + symptom + "\nDiagnostico: " + diagnosis + "\nEstado" + state
-				+ "\nFecha de ingreso: " + admissionDateOnDebut + "\nMascota: " + petRequiredOnDebut + "\ncliente: "
-				+ clientRequiredOnDebut + "\n precio total de hospitalizacion " + totalHospitalizationPrice
-				+ "\n medicinas " + medicineRequiredOnDebut;
-		return x;
-	}
-
-	public String getAllPlusData() {
-		String x = "\nNombre de la mascota: " + petRequiredOnDebut.getName() + "\nTipo de mascota: "
-				+ petRequiredOnDebut.getAnimalType() + "\nSintomas: " + symptom + "\nDiagnostico: " + diagnosis
-				+ "\nEstado: " + state + "\nFecha de ingreso: " + admissionDateOnDebut.getDay() + "/"
-				+ admissionDateOnDebut.getMonth() + "/" + admissionDateOnDebut.getYear() + "" + "\ncliente: "
-				+ clientRequiredOnDebut.getName();
-		return x;
-	}
-
-	public String saveMedicine(String name, double doseCuantity, double pricePerDose, int frecuencyOfAdministration) {
-		String msg = "Medicina agregada de manera exitosa";
-		Medicine newMedicine = new Medicine(name, doseCuantity, pricePerDose, frecuencyOfAdministration);
-		medicineRequiredOnDebut.add(newMedicine);
-		return msg;
-
-	}
+	
 
 }

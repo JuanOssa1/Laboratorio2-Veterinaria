@@ -22,6 +22,21 @@ public class Clients {
 		petOfClientOnDebut.add(pet);
 	}
 
+	public String getAll() {
+		String clientdata = "\nNombre: " + name + "\nIdentificacion: " + identification + "\nDireccion" + direction
+				+ "\nNumero telefonico: " + phoneNumber + "\nMascotas del cliente: " + petOfClientOnDebut;
+		return clientdata;
+	}
+
+	public String showPets() {
+		String msg = "";
+
+		for (int i = 0; i < petOfClientOnDebut.size(); i++) {
+			msg += ((i + 1) + ". " + petOfClientOnDebut.get(i).getName() + "\n");
+		}
+
+		return msg;
+	}
 	// Setters that allows to change variable information in a future
 	public void setName(String newName) {
 		this.name = newName;
@@ -61,20 +76,6 @@ public class Clients {
 		return this.phoneNumber;
 	}
 
-	public String getAll() {
-		String clientdata = "\nNombre: " + name + "\nIdentificacion: " + identification + "\nDireccion" + direction
-				+ "\nNumero telefonico: " + phoneNumber + "\nMascotas del cliente: " + petOfClientOnDebut;
-		return clientdata;
-	}
-
-	public String showPets() {
-		String msg = "";
-
-		for (int i = 0; i < petOfClientOnDebut.size(); i++) {
-			msg += ((i + 1) + ". " + petOfClientOnDebut.get(i).getName() + "\n");
-		}
-
-		return msg;
-	}
+	
 
 }

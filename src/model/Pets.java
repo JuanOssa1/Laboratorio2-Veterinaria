@@ -15,11 +15,12 @@ public class Pets {
 	private ClinicHistory petClinicHistory;
 
 	// builder class Pets (will be called in the main class)
-	public Pets(String name, String animalType, int age, double weight) {
+	public Pets(String name, String animalType, int age, double weight, double height) {
 		this.name = name;
 		this.animalType = animalType;
 		this.age = age;
 		this.weight = weight;
+		this.height = height;
 
 		switch (this.animalType) {
 		case CATITO:
@@ -74,6 +75,11 @@ public class Pets {
 
 		petClinicHistory = null;
 	}
+	public double calculateBMI(){
+		double BMI = 0;
+		BMI = (weight)/(height * height);
+		return BMI;
+	}
 
 	/*
 	 * public void createClinicHistory(boolean state, String symptom, String
@@ -107,6 +113,9 @@ public class Pets {
 	public void setWeight(double newWeight) {
 		this.weight = newWeight;
 	}
+	public void setHeight(double newHeight) {
+		this.weight = newHeight;
+	}
 
 	public void setHospitalizationValue(long newHospitalizationValue) {
 		this.hospitalizationValue = newHospitalizationValue;
@@ -132,6 +141,9 @@ public class Pets {
 
 	public double getWeight() {
 		return this.weight;
+	}
+	public double getHeight(){
+		return this.height;
 	}
 
 	public ClinicHistory getPetClinic() {

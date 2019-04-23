@@ -68,17 +68,17 @@ public class Veterinary
 	}
 
 	/**
-	 * Description:Prueba pre:Prueba Precondiciones post:kldjklj
-	 * 
-	 * @param jjsdkljfl
-	 * @return osiuiosdf
-	 * @throws ljfksdj
-	 */
+	*Description This method allows to create a client with a pet.
+	*pre: 
+	*post: The client and his pet are added to the veterinary.
+	*@return Client added.
+	
+	*/
 	public Clients registerClientAndFirstPet(String name, String identification, String direction, String phoneNumber,
-			String petName, String animalType, int age, double weight) {
+			String petName, String animalType, int age, double weight, double height) {
 
 		Clients newClient = new Clients(name, identification, direction, phoneNumber);
-		Pets pet = new Pets(petName, animalType, age, weight);
+		Pets pet = new Pets(petName, animalType, age, weight, height);
 
 		newClient.addPet(pet);
 		clientRegistrationOnDebut.add(newClient);
@@ -86,13 +86,32 @@ public class Veterinary
 
 		return newClient;
 	}
+	/**
+	*Description This method allows to add more pets to an existing costumer .
+	*pre: The client was created before.
+	*post: The pet was added .
+	*@return The pet body mass index.
+	*@throws If the height is zero, so an exception is thrown due to the division on zero does not exist.
+	*/
 
-	public String registerPets(String petName, String animalType, int age, double weight, Clients client) {
+	public String registerPets(String petName, String animalType, int age, double weight, double height, Clients client) {
 		String msg = "";
-		Pets newPet = new Pets(petName, animalType, age, weight);
+		Pets newPet = new Pets(petName, animalType, age, weight, height);
 		client.addPet(newPet);
 		petRegistrationOnDebut.add(newPet);
 		return msg;
+	}
+	/**
+	*Description This method allows to calculate the body mass index for a pet.
+	*pre: The pet was created before and its attributes height and weight are not null neither height must be zero.
+	*post: The BMI is calculated.
+	*@return The pet body mass index.
+	*@throws If the height is zero, so an exception is thrown due to the division on zero does not exist.
+	*/
+	public double calculateBMIFromSpecificPet(/*double height, double weight,*/ Pets pet){
+		double calculatedBMI = 0;
+		calculatedBMI = pet.calculateBMI();
+		return calculatedBMI;
 	}
 
 	public Clients findClient(String clientIdentification) {
@@ -106,6 +125,11 @@ public class Veterinary
 				foundClient = clientRegistrationOnDebut.get(i);
 				centinel = 2;
 			}
+			/*
+			else{
+				foundClient = clientRegistrationOnDebut.get(i).
+			}
+			*/
 
 		}
 
@@ -124,6 +148,27 @@ public class Veterinary
 		}
 
 		return foundClient;
+	}
+	public String updateClientData(String clientIdentification, String newName, String newIdentification, String newAddress, String newPhone) {
+		String msg = "";
+		int centinel = -1;
+		for (int i = 0; i < clientRegistrationOnDebut.size() && centinel == -1; i++) {
+			if (clientIdentification.equalsIgnoreCase(clientRegistrationOnDebut.get(i).getName())) {
+				clientRegistrationOnDebut.get(i).setDirection(newAddress);
+				clientRegistrationOnDebut.get(i).setIdentification(newIdentification);
+				clientRegistrationOnDebut.get(i).setName(newName);
+				clientRegistrationOnDebut.get(i).setPhoneNumber(newPhone);
+				centinel = 2;
+				msg = "Actualizado exitosamente";
+			}
+			else{
+				msg = "Oh no! parece que ha ocurrido un error intentalo de nuevo";
+			}
+
+		}
+		return msg;
+
+		
 	}
 
 	public String findClientDataWithPetName(String petName) {
