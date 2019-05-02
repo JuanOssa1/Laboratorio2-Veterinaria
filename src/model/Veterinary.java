@@ -1,11 +1,10 @@
 package model;
 import java.util.ArrayList;
 public class Veterinary
-
 {
-
 	// Constant
 	public final static int TOTAL_MINIROOMS = 8;
+	public final static int DAYSOFSERVICEOFTHEVET = 7;
 	// Attributes from the class
 	private String name;
 	// Association attributes
@@ -13,6 +12,8 @@ public class Veterinary
 	private ArrayList<Pets> petRegistrationOnDebut;
 	private ArrayList<ClinicHistory> clinicHistoryOnDebut;
 	private MiniRooms[] miniRoomsOnDebut;
+	private ArrayList<OtherService> otherServices;
+	//private OtherService[] otherServices;
 
 	// builder class Veterinary (will be called in the main class)
 	public Veterinary(String name) {
@@ -21,9 +22,9 @@ public class Veterinary
 		clientRegistrationOnDebut = new ArrayList<Clients>();
 		petRegistrationOnDebut = new ArrayList<Pets>();
 		clinicHistoryOnDebut = new ArrayList<ClinicHistory>();
+		otherServices = new ArrayList<OtherService>();
 		// Fixed Array
 		miniRoomsOnDebut = new MiniRooms[TOTAL_MINIROOMS];
-
 		miniRoomsOnDebut[0] = new MiniRooms(true);
 		miniRoomsOnDebut[1] = new MiniRooms(true);
 		miniRoomsOnDebut[2] = new MiniRooms(true);
@@ -32,6 +33,14 @@ public class Veterinary
 		miniRoomsOnDebut[5] = new MiniRooms(true);
 		miniRoomsOnDebut[6] = new MiniRooms(true);
 		miniRoomsOnDebut[7] = new MiniRooms(true);
+		//otherServices = new ArrayList<OtherService>();
+		/*
+		Date date = new Date(2, 3, 2019);
+		otherServices[0]= new OtherService("Don carlos", date, "100365", "4525645178");
+		otherServices[1]= new OtherService("Don carlos", date, "100365", "4525645178");
+		otherServices[2]= new OtherService("Don carlos", date, "100365", "4525645178");
+		otherServices[3]= new OtherService("Don carlos", date, "100365", "4525645178");
+		*/
 
 	}
 
@@ -342,4 +351,139 @@ public class Veterinary
 
 		return realTotal;
 	}
+	public String otherServiceRegistration(String name, Date date, String idPet,  String idClient){
+		String msg = "";
+				OtherService service = new OtherService(name, date, idPet, idClient);
+				otherServices.add(service);
+				msg = "Agregado exitosamente";
+			
+		return msg;
+	}
+	
+	
+	public double calculateIncomeByServices(){
+		double value = 0;
+		for(int i = 0; i<otherServices.size(); i++){
+			value += otherServices.get(i).getCost();
+		}
+		return value;
+	}
+	
+		public double averageIncomeByServices(){
+		double value = 0;
+		for(int i = 0; i<otherServices.size(); i++){
+			value += otherServices.get(i).getCost();
+			value = value/OtherService.MAXTYPESOFSERVICES;
+		}
+		return value;
+	}
+		public double calculateTotalIncomeOfTheVet(){
+			long totalIncomeH = 0;
+			long totalIncomeS = 0;
+			long totalIncome = 0;
+			for (int i = 0; i < clinicHistoryOnDebut.size(); i++) {
+				totalIncomeH += clinicHistoryOnDebut.get(i).getTotalHospitalizationPrice();
+			}
+			for(int i = 0; i<otherServices.size(); i++){
+				totalIncomeS += otherServices.get(i).getCost();
+			}
+			totalIncome = totalIncomeH + totalIncomeS;
+			return totalIncome;
+		}
+		public double totalAverageIncomeInAweek(int startingDay, int startingMonth, int startingYear, int finalDay, int finalMonth, int finalYear){
+			long totalIncomeH = 0;
+			long totalIncomeS = 0;
+			long totalIncome = 0;
+			//String msg = "";
+			int week = 0;
+			double averageIncome = 0;
+			for (int i = 0; i < clinicHistoryOnDebut.size(); i++) {
+				if((clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getDay() > startingDay && clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getDay() < finalDay) && (clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getMonth() > startingMonth && clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getMonth() < finalMonth) && (clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getYear() > startingYear && clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getYear() < finalYear)){
+					totalIncomeH += clinicHistoryOnDebut.get(i).getTotalHospitalizationPrice();
+				}	
+			}
+			for(int i = 0; i<otherServices.size(); i++){
+				if((otherServices.get(i).getDate().getDay() > startingDay && otherServices.get(i).getDate().getDay() < finalDay) && (otherServices.get(i).getDate().getMonth() > startingMonth && otherServices.get(i).getDate().getMonth() < finalMonth) && (otherServices.get(i).getDate().getYear() > startingYear && otherServices.get(i).getDate().getYear() < finalYear) ){
+					totalIncomeS += otherServices.get(i).getCost();
+				}
+				
+			}
+			totalIncome = totalIncomeH + totalIncomeS;
+			week = ((startingDay - finalDay)+((startingMonth-finalMonth)*30)+((startingYear-finalYear)*360));
+			averageIncome = totalIncome/week;
+			return averageIncome;
+		}
+		///////////////////////////////////////////////////////////////////////////
+		//ATENCION, EL METODO QUE SE ENCUENTRA COMENTADO ABAJO FUNCIONA MEDIANTE EL INGRESO DE FECHAS Y NO DE DIAD MESES Y ANIOS INDIVIDUALMENTE
+		//////////////////////////////////////////////////////////////////////////
+		/*
+		public double totalAverageIncomeInAweek(Date dateStarting, Date dateFinal){
+			long totalIncomeH = 0;
+			long totalIncomeS = 0;
+			long totalIncome = 0;
+			//String msg = "";
+			int week = 0;
+			double averageIncome = 0;
+			for (int i = 0; i < clinicHistoryOnDebut.size(); i++) {
+				if((clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getDay() > dateStarting.getDay() && clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getDay() < dateFinal.getDay()) && (clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getMonth() > dateStarting.getMonth() && clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getMonth() < dateFinal.getMonth()) && (clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getYear() > dateStarting.getYear() && clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getYear() < dateFinal.getYear())){
+					totalIncomeH += clinicHistoryOnDebut.get(i).getTotalHospitalizationPrice();
+				}	
+			}
+			for(int i = 0; i<otherServices.size(); i++){
+				if((otherServices.get(i).getDate().getDay() > dateStarting.getDay() && otherServices.get(i).getDate().getDay() < dateFinal.getDay()) && (otherServices.get(i).getDate().getMonth() > dateStarting.getMonth() && otherServices.get(i).getDate().getMonth() < dateFinal.getMonth()) && (otherServices.get(i).getDate().getYear() > dateStarting.getYear() && otherServices.get(i).getDate().getYear() < dateFinal.getYear()) ){
+					totalIncomeS += otherServices.get(i).getCost();
+				}
+				
+			}
+			totalIncome = totalIncomeH + totalIncomeS;
+			week = ((dateFinal.getDay() - dateStarting.getDay())+((dateFinal.getMonth()-dateStarting.getMonth())*30)+((dateFinal.getYear()-dateStarting.getYear())*360));
+			averageIncome = totalIncome/week;
+			return averageIncome;
+		}
+		*/
+		public String reportInAspecificWeek(int startingDay, int startingMonth, int startingYear, int finalDay, int finalMonth, int finalYear){
+			String msg = "";
+			for(int i = 0; i<otherServices.size(); i++){
+				if((otherServices.get(i).getDate().getDay() > startingDay && otherServices.get(i).getDate().getDay() < finalDay) && (otherServices.get(i).getDate().getMonth() > startingMonth && otherServices.get(i).getDate().getMonth() < finalMonth) && (otherServices.get(i).getDate().getYear() > startingYear && otherServices.get(i).getDate().getYear() < finalYear) ){
+					msg += otherServices.get(i).getName();
+				}
+			
+			
+			}
+			return msg;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		/*
+		public double averageIncomeInASpecificWeek(){
+			double averageIncome = 0;
+			
+			return averageIncome;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+	*/
+	
+	/*
+	public String calculateIncomeByServices(){
+		String value = "";
+		for(int i = 0; i<otherServices.size(); i++){
+			value += otherServices.get(i).getName();
+		}
+		return value;
+	}
+	*/
+	
 }

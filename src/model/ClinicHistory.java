@@ -69,7 +69,7 @@ public class ClinicHistory {
 	}
 
 	public void setDiagnosis(String newDiagnosis) {
-		this.diagnosis = newDiagnosis;
+		this.diagnosis += newDiagnosis;
 	}
 
 	public void setPetRequiredOnDebut(Pets newPetRequiredOnDebut) {
