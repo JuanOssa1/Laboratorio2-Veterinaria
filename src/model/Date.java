@@ -5,7 +5,6 @@ public class Date {
 	private int day;
 	private int month;
 	private int year;
-
 	// Association attributes
 	// builder class Pets (will be called in the main class)
 	public Date(int day, int month, int year) {
@@ -13,30 +12,25 @@ public class Date {
 		this.month = month;
 		this.year = year;
 	}
-
-	// Setters that allows to change variable information in a future
-	public void setDay(int newDay) {
-		day = newDay;
-	}
-
-	public void setmonth(int newMonth) {
-		month = newMonth;
-	}
-
-	public void setYear(int newYear) {
-		year = newYear;
-	}
-
 	// Gets that allows to use the information of the attributes in another
-	// class
+	/**
+	 * Description: This method allows to get the day of a date to use it in another class if is needed 
+	 * @return The day of a date
+	 */
 	public int getDay() {
 		return this.day;
 	}
-
+	/**
+	 * Description: This method allows to get the month of a date to use it in another class if is needed 
+	 * @return The month of a date
+	 */
 	public int getMonth() {
 		return this.month;
 	}
-
+	/**
+	 * Description: This method allows to get the day of a date to use it in another class if is needed 
+	 * @return The day of a date
+	 */
 	public int getYear() {
 		return this.year;
 	}

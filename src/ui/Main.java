@@ -18,10 +18,24 @@ public class Main {
 
 	public void init() {
 	
-		//Date date = new Date()
+		Date date = new Date(12, 12, 2018);
+		Date date1 = new Date(11, 11, 2011);
 		happypet = new Veterinary("happypet");
-		happypet.registerClientAndFirstPet("Karen", "123456", "Calle siempre viva", "325461", "Horus",Pets.DOGTITO, 2, 38.5, 36.3);
+		happypet.registerClientAndFirstPet("Karen", "123456", "Calle siempre viva", "325461", "Horus",Pets.DOGTITO, 2, 38.5, 36.3, "123456");
+		//happypet.registerClientAndFirstPet("Karen", "123456", "Calle siempre viva", "325461", "Horus",Pets.DOGTITO, 2, 38.5, 36.3, 123456);
+		
+		//Registro de una historia clinica
+		/*
+		happypet.findClient("123456").getPetsofClientsOnDebut().get(0).setClinicHistory(happypet.createClinicHistory(true, "churrias", "maluco",
+				date,happypet.findClient("123456").getPetsofClientsOnDebut().get(0),
+				happypet.findClient("123456"), 0, happypet.findClient("123456").getPetsofClientsOnDebut().get(0).getPetClinic().getAll()));
+		
+		happypet.findClient("123456").getPetsofClientsOnDebut().get(1).setClinicHistory(happypet.createClinicHistory(true, "dolordeestomago", "dolordepiernas",
+				date1,happypet.findClient("123456").getPetsofClientsOnDebut().get(1),
+				happypet.findClient("123456"), 0, happypet.findClient("123456").getPetsofClientsOnDebut().get(1).getPetClinic().getAll()));
+		*/
 		dataRead = new Scanner(System.in);
+		
 		//happypet.otherServiceRegistration(OtherService.PETWASHVET, date, idPet, idClient);
 
 	}
@@ -74,8 +88,10 @@ public class Main {
 			System.out.println("Ingrese la altura de su mascota");
 			double height = dataRead.nextDouble();
 			dataRead.nextLine();
+			System.out.println("Ingrese una identificacion para su mascota");
+			String id = dataRead.nextLine();
 			happypet.registerClientAndFirstPet(name, identification, direction, phoneNumber, petName, animalType, age,
-					weight, height);
+					weight, height, id);
 
 			addMorePets();
 			menu(0);
@@ -130,8 +146,7 @@ public class Main {
 				Pets selectedPet = client.getPetsofClientsOnDebut().get(numPet - 1);
 
 				if (selectedPet.getPetClinic() == null) {
-					selectedPet.setClinicHistory(
-							happypet.createClinicHistory(state, symptom, diagnose, date, selectedPet, client, 0, ""));
+					selectedPet.setClinicHistory(happypet.createClinicHistory(state, symptom, diagnose, date, selectedPet, client, 0, ""));
 					System.out.println("No tiene historia clinica se procedera a crearla");
 					int totalHospitalizationPrice = 0;
 					if (selectedPet.getPetClinic().getMedicineRequiredOnDebut().size() == 0) {
@@ -168,8 +183,7 @@ public class Main {
 			System.out.println("Ingresa la frecuencia de administracion");
 			int frecuencyOfAdministration = dataRead.nextInt();
 			dataRead.nextLine();
-			System.out.println(
-					"Ingrese el id del cliente para seleccionar mascota con historia clinica y agregar medicina");
+			System.out.println("Ingrese el id del cliente para seleccionar mascota con historia clinica y agregar medicina");
 			String idClient = dataRead.nextLine();
 			Clients client = happypet.findClient(idClient);
 			if (client == null) {
@@ -218,12 +232,12 @@ public class Main {
 				Date hospitalizationDate = new Date(day, month, year);
 				Date hurrentDate = new Date(currentDay, currentMonth, currentYear);
 
-				System.out.println("Ingrese el numero de dias que el animal estara hospitalizado");
+				//System.out.println("Ingrese el numero de dias que el animal estara hospitalizado");
 				int hospitalizedDays = happypet.calculateDate(hospitalizationDate, hurrentDate);
 				int totalHospitalizationPrice = 0;
 
 				System.out.println(
-						"Ingrese el id del cliente para seleccionar mascota con historia clinica y agregar medicina");
+						"Ingrese el id del cliente para seleccionar mascota y saber costo");
 				String idClient = dataRead.next();
 				Clients client = happypet.findClient(idClient);
 				System.out.println("El nombre de usuario es: " + client.getName());
@@ -297,7 +311,7 @@ public class Main {
 		}
 		else if (option == 12)
 		{
-			System.out.println("Ingrese el id del cliente para seleccionar mascota con historia clinica y agregar medicina");
+			System.out.println("Ingrese el id del cliente para seleccionar mascota y calcular imc");
 			String idClient = dataRead.nextLine();
 			Clients client = happypet.findClient(idClient);
 			if (client == null) 
@@ -367,6 +381,7 @@ public class Main {
 			System.out.println("El promedio de ingresos por servicios " + happypet.averageIncomeByServices());
 		}
 		else if(option ==18){
+			System.out.println("INGRESOS PROMEDIO EN UNA SEMANA");
 			System.out.println("Por favor ingrese la fecha INICIAL a la cual quiere encontrar los ingresos promedio");
 			System.out.println("Ingrese el dia en numeros");
 			int dayI = dataRead.nextInt();dataRead.nextLine();
@@ -380,7 +395,7 @@ public class Main {
 			int monthF = dataRead.nextInt();dataRead.nextLine();
 			System.out.println("Ingrese el anio en numeros");
 			int yearF = dataRead.nextInt();dataRead.nextLine();
-			happypet.totalAverageIncomeInAweek(dayI, monthI, yearI, dayF, monthF, yearF);
+			System.out.println(happypet.totalAverageIncomeInAweek(dayI, monthI, yearI, dayF, monthF, yearF));happypet.totalAverageIncomeInAweek(dayI, monthI, yearI, dayF, monthF, yearF);
 			/////////////////////////////////////////////////////////////////////////////////////////////////////
 			//LOS DATOS QUE SE ENCUENTRAN COMENTADOS ACA ABAJO SIRVEN PARA EL METODO QUE RECIBE FECHAS Y NO DIAS INDIVIDUALMENTE
 			////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -391,6 +406,7 @@ public class Main {
 			*/
 		}
 		else if(option == 19){
+			System.out.println("REPORTE");
 			System.out.println("Reporte de servicios prestados dada una fecha inicial y una fecha final");
 			System.out.println("Por favor ingrese la fecha INICIAL a la cual quiere encontrar los servicios prestados");
 			System.out.println("Ingrese el dia en numeros");
@@ -405,8 +421,37 @@ public class Main {
 			int monthF = dataRead.nextInt();dataRead.nextLine();
 			System.out.println("Ingrese el anio en numeros");
 			int yearF = dataRead.nextInt();dataRead.nextLine();
+			System.out.println(happypet.reportInAspecificWeek(dayI, monthI, yearI, dayF, monthF, yearF));
 			
 		}
+		else if(option == 20) {
+			
+			System.out.println("ingresa identificacion del cliente");
+			String clientIdentification = dataRead.nextLine();
+			System.out.println(happypet.findClientData(clientIdentification));
+			System.out.println("Escriba el nombre de la mascota a la cual quiere agregar mas sintomas tal cual como aparece en pantalla Recuerda que la mascota debe estar hospitalizada");
+			String pet = dataRead.nextLine();
+			System.out.println("Escriba diagnostico");
+			String diagnostico = dataRead.nextLine();
+			happypet.findClinicHistoryOfPetGood(pet).setDiagnosis(diagnostico);
+		}
+		else if(option == 21){
+			System.out.println("ingresa identificacion del cliente");
+			String clientIdentification = dataRead.nextLine();
+			System.out.println(happypet.findClientData(clientIdentification));
+			System.out.println("Escriba el nombre de la mascota a la cual quiere agregar mas sintomas tal cual como aparece en pantalla Recuerda que la mascota debe estar hospitalizada");
+			String pet = dataRead.nextLine();
+			System.out.println("Escriba diagnostico");
+			String diagnostico = dataRead.nextLine();
+			happypet.findClinicHistoryOfPetGood(pet).setSymptom(diagnostico);
+		}
+		
+		
+		
+		
+		
+		
+		
 		menu(0);
 
 	}
@@ -452,7 +497,9 @@ public class Main {
 				double weight = dataRead.nextInt();
 				System.out.println("Ingrese la altura de su mascota");
 				double height = dataRead.nextInt();
-				happypet.registerPets(name, animalType, age, weight, height, client);
+				System.out.println("Ingrese el id de la mascota");
+				String id = dataRead.nextLine();
+				happypet.registerPets(name, animalType, age, weight, height, client, id);
 				System.out.println("La mascota ha sido agregada exitosamente");
 				menu(2);
 			}
@@ -482,6 +529,10 @@ public class Main {
 		System.out.println("15. Calcular ingresos por concepto de servicios");
 		System.out.println("16. Calular todos los ingresos");
 		System.out.println("17. Calcular promedio por servicios");
+		System.out.println("18. Promedio ganancia en una semana");
+		System.out.println("19. Reporte");
+		System.out.println("20. Agregar mas diagnosticos a historia clinica activa");
+		System.out.println("21. Agregar mas sintomas a historia clinica activa");
 
 
 	}

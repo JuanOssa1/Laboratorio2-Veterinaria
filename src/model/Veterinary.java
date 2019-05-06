@@ -33,66 +33,42 @@ public class Veterinary
 		miniRoomsOnDebut[5] = new MiniRooms(true);
 		miniRoomsOnDebut[6] = new MiniRooms(true);
 		miniRoomsOnDebut[7] = new MiniRooms(true);
-		//otherServices = new ArrayList<OtherService>();
-		/*
-		Date date = new Date(2, 3, 2019);
-		otherServices[0]= new OtherService("Don carlos", date, "100365", "4525645178");
-		otherServices[1]= new OtherService("Don carlos", date, "100365", "4525645178");
-		otherServices[2]= new OtherService("Don carlos", date, "100365", "4525645178");
-		otherServices[3]= new OtherService("Don carlos", date, "100365", "4525645178");
-		*/
-
 	}
-
 	// Setters that allows to change variable information in a future
-	public void setName(String newName) {
-		name = newName;
-	}
-
+	/**
+	 * Description: This method allows to the minirooms of the veterinary to true or false 
+	 * @param newMiniRoomsOnDebut The param must be not null
+	 */
 	public void setMiniRoomsOnDebut(MiniRooms[] newMiniRoomsOnDebut) {
 		this.miniRoomsOnDebut = newMiniRoomsOnDebut;
 	}
+	
 
 	// Gets that allows to use the information of the attributes in another
 	// class
-	public String getName() {
-		return this.name;
-	}
-
-	// ArrayList
-	public ArrayList<Clients> getClientRegistrationOnDebut() {
-		return this.clientRegistrationOnDebut;
-	}
-
-	public ArrayList<Pets> getPetRegistrationOnDebut() {
-		return this.petRegistrationOnDebut;
-	}
-
-	public ArrayList<ClinicHistory> getClinicHistoryOnDebut() {
-		return this.clinicHistoryOnDebut;
-	}
-
-	public MiniRooms[] getMiniRoomsOnDebut() {
-		return this.miniRoomsOnDebut;
-	}
-
-	/**
-	*Description This method allows to create a client with a pet.
-	*pre: 
-	*post: The client and his pet are added to the veterinary.
-	*@return Client added.
 	
-	*/
-	public Clients registerClientAndFirstPet(String name, String identification, String direction, String phoneNumber,
-			String petName, String animalType, int age, double weight, double height) {
-
+	/**
+	 *Description This method allows to create a client with a pet.
+	 *pre: 
+	 *post: The client and his pet are added to the veterinary.
+	 * @param name The param must be not null
+	 * @param identification The param must be not null
+	 * @param direction The param must be not null
+	 * @param phoneNumber The param must be not null
+	 * @param petName The param must be not null
+	 * @param animalType The param must be not null
+	 * @param age The param must be not null
+	 * @param weight The param must be not null
+	 * @param height The param must be not null
+	 * @param id The param must be not null
+	 * @return Client added.
+	 */
+	public Clients registerClientAndFirstPet(String name, String identification, String direction, String phoneNumber,String petName, String animalType, int age, double weight, double height, String id) {
 		Clients newClient = new Clients(name, identification, direction, phoneNumber);
-		Pets pet = new Pets(petName, animalType, age, weight, height);
-
+		Pets pet = new Pets(petName, animalType, age, weight, height, id);
 		newClient.addPet(pet);
 		clientRegistrationOnDebut.add(newClient);
 		petRegistrationOnDebut.add(pet);
-
 		return newClient;
 	}
 	/**
@@ -102,10 +78,9 @@ public class Veterinary
 	*@return The pet body mass index.
 	*@throws If the height is zero, so an exception is thrown due to the division on zero does not exist.
 	*/
-
-	public String registerPets(String petName, String animalType, int age, double weight, double height, Clients client) {
+	public String registerPets(String petName, String animalType, int age, double weight, double height, Clients client, String id) {
 		String msg = "";
-		Pets newPet = new Pets(petName, animalType, age, weight, height);
+		Pets newPet = new Pets(petName, animalType, age, weight, height, id);
 		client.addPet(newPet);
 		petRegistrationOnDebut.add(newPet);
 		return msg;
@@ -122,7 +97,13 @@ public class Veterinary
 		calculatedBMI = pet.calculateBMI();
 		return calculatedBMI;
 	}
-
+	/**
+	 * Description: Allows to search a client with an id 
+	 * pre: The client was created before with an id
+	 * post The client is searched with the id
+	 * @param clientIdentification
+	 * @return The client required that have the specified id
+	 */
 	public Clients findClient(String clientIdentification) {
 		Clients foundClient = null;
 		int centinel = -1;
@@ -134,30 +115,41 @@ public class Veterinary
 				foundClient = clientRegistrationOnDebut.get(i);
 				centinel = 2;
 			}
-			/*
-			else{
-				foundClient = clientRegistrationOnDebut.get(i).
-			}
-			*/
-
 		}
-
 		return foundClient;
 	}
-
+	/**
+	 * Description: This method allows to search a client with the id that user provides before that it get the data of the client
+	 * pre: The client was created before
+	 * post: The client is searched 
+	 * post: The data of the client is searched 
+	 * @param clientIdentification. The param must be not null
+	 * @return The data of the specified client
+	 */
 	public String findClientData(String clientIdentification) {
 		String foundClient = "";
 		int centinel = -1;
 		for (int i = 0; i < clientRegistrationOnDebut.size() && centinel == -1; i++) {
-			if (clientIdentification.equalsIgnoreCase(clientRegistrationOnDebut.get(i).getName())) {
+			if (clientIdentification.equalsIgnoreCase(clientRegistrationOnDebut.get(i).getIdentification())) {
 				foundClient = clientRegistrationOnDebut.get(i).getAll();
 				centinel = 2;
 			}
-
 		}
-
 		return foundClient;
 	}
+	/**
+	 * Description: This method allows to update the client identification, name, Address and phone of a client
+	 * pre: The client was created before
+	 * post: The client is searched
+	 * post: The data is searched
+	 * post: The data is updated
+	 * @param clientIdentification The param must be not null
+	 * @param newName The param must be not null
+	 * @param newIdentification The param must be not null
+	 * @param newAddress The param must be not null
+	 * @param newPhone The param must be not null
+	 * @return Message that gives information about the status of the update The param must be not null
+	 */
 	public String updateClientData(String clientIdentification, String newName, String newIdentification, String newAddress, String newPhone) {
 		String msg = "";
 		int centinel = -1;
@@ -173,13 +165,17 @@ public class Veterinary
 			else{
 				msg = "Oh no! parece que ha ocurrido un error intentalo de nuevo";
 			}
-
 		}
-		return msg;
-
-		
+		return msg;	
 	}
-
+	/**
+	 * Description: This method allows to search a client with the pet name of the client that the user needs
+	 * pre: The client is created before with a pet
+	 * post: The pet is searched
+	 * post: The client is searched with the name of the pet
+	 * @param petName The param must be not null
+	 * @return The client required by the user
+	 */
 	public String findClientDataWithPetName(String petName) {
 		String foundClient = "";
 		int centinel = -1;
@@ -188,11 +184,15 @@ public class Veterinary
 				foundClient = petRegistrationOnDebut.get(i).getPetClinic().getClientRequiredOnDebut().getAll();
 				centinel = 2;
 			}
-
 		}
 		return foundClient;
 	}
-
+	/**
+	 * Description:This method allows to search the available rooms in the veterinary
+	 * pre: The rooms are created before
+	 * post: Available rooms are searched
+	 * @return The number of the available room
+	 */
 	public int findAvaibleRooms() {
 		int disponibility = 0;
 		for (int i = 0; i < miniRoomsOnDebut.length; i++) {
@@ -202,29 +202,36 @@ public class Veterinary
 				}
 			}
 		}
-
 		return disponibility;
 	}
-
-	/*
-	 * public void ClinicHistory( boolean state, String symptom, String
-	 * diagnosis, Pets petRequiredOnDebut, Clients clientRequiredOnDebut) {
-	 * 
-	 * }
+	/**
+	 * Description: This method allows to create a Clinic History with the parameters that the user gives
+	 * pre: The parameters most be not null
+	 * post: The clinic history is created 
+	 * @param state The param must be not null
+	 * @param symptom The param must be not null
+	 * @param diagnosis The param must be not null
+	 * @param date The param must be not null
+	 * @param petRequiredOnDebut The param must be not null
+	 * @param clientRequiredOnDebut The param must be not null
+	 * @param totalHospitalizationPrice The param must be not null
+	 * @param summary The param must be not null
+	 * @return The new clinic history The param must be not null
 	 */
 	public ClinicHistory createClinicHistory(boolean state, String symptom, String diagnosis, Date date,
-			Pets petRequiredOnDebut, Clients clientRequiredOnDebut, long totalHospitalizationPrice, String summary) {
-		ClinicHistory newClinicHistory = new ClinicHistory(state, symptom, diagnosis, date, petRequiredOnDebut,
-				clientRequiredOnDebut, totalHospitalizationPrice, summary);
-
+		Pets petRequiredOnDebut, Clients clientRequiredOnDebut, long totalHospitalizationPrice, String summary) {
+		ClinicHistory newClinicHistory = new ClinicHistory(state, symptom, diagnosis, date, petRequiredOnDebut,clientRequiredOnDebut, totalHospitalizationPrice, summary);
 		clinicHistoryOnDebut.add(newClinicHistory);
-
-		// .setClinicHistoryOnRoomOnDebut(newClinicHistory)
 		return newClinicHistory;
 	}
-
+	/**
+	 * Description: This method allows to add a pet to an available room
+	 * pre: The room must be available
+	 * post: The pet is added to an available rooms
+	 * @return A message that inform the user if the pet was added
+	 */
 	public String addPetToAnARoom(Pets current) {
-		String msg = "";
+		String msg = "Exitoso";
 		boolean found = false;
 		for (int i = 0; i < miniRoomsOnDebut.length && !found; i++) {
 			if (miniRoomsOnDebut[i].getDisponibility()) {
@@ -232,48 +239,51 @@ public class Veterinary
 				miniRoomsOnDebut[i].setDisponibility(false);
 				miniRoomsOnDebut[i].setPetOnRoomDebut(current);
 				miniRoomsOnDebut[i].setClinicHistoryOnRoomOnDebut(current.getPetClinic());
-
 			}
 		}
-
 		return msg;
 	}
-
+	/**
+	 * Description: This method allows to show the number of the room where a pet is
+	 * Post: The available rooms are searched
+	 * @return A message with the number of the room where a pet is
+	 */
 	public String showPetsAndMiniRooms() {
 		String msg = "";
-
 		for (int i = 0; i < miniRoomsOnDebut.length; i++) {
 			if (miniRoomsOnDebut[i].getPetOnRoomDebut() != null) {
 				msg += ((i + 1) + ". " + miniRoomsOnDebut[i].getPetOnRoomDebut().getName() + "\n");
-			} else {
+			}
+			else {
 				msg += ((i + 1) + ". No hay mascota en esta habitacion \n");
 			}
 		}
-
 		return msg;
 	}
-
-	public long calculateTotalMedicine(Pets selectedPet)// No puedo obtenerla
-														// mediante la historia
-														// clinica porque a
-														// penas la esta creando
-														// y llama un metodo que
-														// todavia no existe
+	/**
+	 * Description: This method allows to calculate the total medicine price of the medicines given to a pet specified by the user
+	 * post: The pet is searched and get the price of the medicines required by the pet
+	 * @return Total price of the medicines  of an specified pet
+	 */
+	public long calculateTotalMedicine(Pets selectedPet)												
 	{
 		long totalMedicine = 0;
-
 		for (int i = 0; i < selectedPet.getPetClinic().getMedicineRequiredOnDebut().size(); i++) {
-
 			totalMedicine += selectedPet.getPetClinic().getMedicineRequiredOnDebut().get(i).getTotalMedicinePrice();
 		}
-
 		return totalMedicine;
 	}
-
+	/**
+	 * 
+	 * @return
+	 */
 	public void addClinicHistory(ClinicHistory clinicHistory) {
 		clinicHistoryOnDebut.add(clinicHistory);
 	}
-
+	/**
+	 * 
+	 * @return
+	 */
 	public long calculateTotalIncomeofHospitalization() {
 		long totalIncome = 0;
 		for (int i = 0; i < clinicHistoryOnDebut.size(); i++) {
@@ -281,7 +291,10 @@ public class Veterinary
 		}
 		return totalIncome;
 	}
-
+	/**
+	 * 
+	 * @return
+	 */
 	public String showCurrentHospitalizedPets() {
 		int centinel = -1;
 		String pet = "";
@@ -297,7 +310,12 @@ public class Veterinary
 		}
 		return pet;
 	}
-
+	/**
+	 * Description: This method allows to add an a summary to a clinic history of and specified pet
+	 * @param clinic The param must be not null
+	 * @param all The param must be not null
+	 * @return The summary of the required pet
+	 */
 	public String addSummarytoAclinicHistory(Pets clinic, ClinicHistory all) //////////////////////// OJOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 	{
 		String summaryRecovered = "";
@@ -309,7 +327,13 @@ public class Veterinary
 		}
 		return summaryRecovered;
 	}
-
+	/**
+	 * Description: This method allows to search the clinic history of a pet
+	 * pre: The pet was created before
+	 * post: The clinic history of the pet specified by the user are searched 
+	 * @param current The param must be not null
+	 * @return The clinic history of the pet 
+	 */
 	public ClinicHistory findClinicHistoryOfPet(Pets current) {
 		ClinicHistory petHistory = null;
 		boolean found = false;
@@ -323,7 +347,35 @@ public class Veterinary
 
 		return petHistory;
 	}
+	//GOOD
+	/**
+	 * Description: This method allows to search the clinic history of a pet
+	 * pre: The pet was created before
+	 * post: The clinic history of the pet specified by the user are searched 
+	 * @param pet The param must be not null
+	 * @return The clinic history of the pet 
+	 */
+	public ClinicHistory findClinicHistoryOfPetGood(String pet) {
+		ClinicHistory petHistory = null;
+		boolean found = false;
 
+		for (int i = clinicHistoryOnDebut.size() - 1; i >= 0 && !found; i--) {
+			if (clinicHistoryOnDebut.get(i).getPetRequiredOnDebut().getName().equalsIgnoreCase(pet)) {
+				found = true;
+				petHistory = clinicHistoryOnDebut.get(i);
+			}
+		}
+
+		return petHistory;
+	}
+	/**
+	 * Description: This method allows to search the clinic history of a pet that is not hospitalized
+	 * pre The pet was created before
+	 * pre: The pet is not hospitalized
+	 * post: The clinic history of the pet that is not hospitalized is searched 
+	 * @param petName The param must be not null
+	 * @return Message that says to the user if a pet was hospitalized before
+	 */
 	public String findClinicHistoryOfPetOnHistorialOfClinicHistory(String petName) {
 		String found = "";
 		for (int i = 0; i < clinicHistoryOnDebut.size(); i++) {
@@ -333,9 +385,14 @@ public class Veterinary
 		}
 		return found;
 	}
-
-	public int calculateDate(Date sickdate, Date goodDate) {
-
+	/**
+	 * Description: This method allows to calculate how much time a pet was hospitalized 
+	 * post: The time is calculated in days
+	 * @param sickdate The param must be not null
+	 * @param goodDate The param must be not null
+	 * @return Number of days that a pet was hospitalized 
+	 */
+		public int calculateDate(Date sickdate, Date goodDate) {
 		int operationDay = 30;
 		int operationMonth = 12;
 		int operationYear = 2019;
@@ -348,9 +405,13 @@ public class Veterinary
 		int totalYearsGood = (operationYear - goodDate.getYear()) * 360;
 		int totalDaysMonthYearGood = totalDaysGood + totalMonthsGood + totalYearsGood;
 		int realTotal = totalDaysMonthYearGood - totalDaysMonthYearSick;
-
 		return realTotal;
 	}
+	/**
+	 * Description: This method allows to register the services borrowed to a pet 
+	 * post: The services is created and added
+	 * @return Message that inform to the user the state of the registration
+	 */
 	public String otherServiceRegistration(String name, Date date, String idPet,  String idClient){
 		String msg = "";
 				OtherService service = new OtherService(name, date, idPet, idClient);
@@ -359,8 +420,11 @@ public class Veterinary
 			
 		return msg;
 	}
-	
-	
+	/**
+	 * Description This method allows to calculate the total income by services
+	 * post: total income by services are calculated
+	 * @return total income by services
+	 */
 	public double calculateIncomeByServices(){
 		double value = 0;
 		for(int i = 0; i<otherServices.size(); i++){
@@ -368,8 +432,12 @@ public class Veterinary
 		}
 		return value;
 	}
-	
-		public double averageIncomeByServices(){
+	/**
+	 * Description: This method allows to calculate the average income of services divided with the number of services borrowed by the veterinary
+	 * post: The average income by services is calculated
+	 * @return Average income by services 
+	 */
+	public double averageIncomeByServices(){
 		double value = 0;
 		for(int i = 0; i<otherServices.size(); i++){
 			value += otherServices.get(i).getCost();
@@ -377,6 +445,13 @@ public class Veterinary
 		}
 		return value;
 	}
+		/**
+		 * Description: This method allows to calculate the total income of the veterinary including hospitalization and borrowed services
+		 * post: Total income of hospitalizations is calculated
+		 * post: Total income of services is calculated
+		 * post: Combined total income is calculated
+		 * @return Total income of the veterinary
+		 */
 		public double calculateTotalIncomeOfTheVet(){
 			long totalIncomeH = 0;
 			long totalIncomeS = 0;
@@ -390,27 +465,44 @@ public class Veterinary
 			totalIncome = totalIncomeH + totalIncomeS;
 			return totalIncome;
 		}
+		/**
+		 * Description: This method allows to calculate the average income of the veterinary in a range given by the user
+		 * post: The number of hospitalization borrowed in the range are calculated
+		 * post: The number of services borrowed in the range are calculated
+		 * post: Total income in that range is calculated
+		 * post: average income is calculated 
+		 * @param startingDay The param must be not null
+		 * @param startingMonth The param must be not null
+		 * @param startingYear The param must be not null
+		 * @param finalDay The param must be not null
+		 * @param finalMonth The param must be not null
+		 * @param finalYear The param must be not null
+		 * @return Average income in the range given by the user
+		 */
 		public double totalAverageIncomeInAweek(int startingDay, int startingMonth, int startingYear, int finalDay, int finalMonth, int finalYear){
+			int counterH = 0;
+			int counterS = 0;
 			long totalIncomeH = 0;
 			long totalIncomeS = 0;
 			long totalIncome = 0;
 			//String msg = "";
-			int week = 0;
+			//int week = 0;
 			double averageIncome = 0;
 			for (int i = 0; i < clinicHistoryOnDebut.size(); i++) {
-				if((clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getDay() > startingDay && clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getDay() < finalDay) && (clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getMonth() > startingMonth && clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getMonth() < finalMonth) && (clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getYear() > startingYear && clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getYear() < finalYear)){
+				if((clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getDay() >= startingDay && clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getDay() <= finalDay) && (clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getMonth() >= startingMonth && clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getMonth() <= finalMonth) && (clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getYear() >= startingYear && clinicHistoryOnDebut.get(i).getAdmissionDateOnDebut().getYear() <= finalYear)){
 					totalIncomeH += clinicHistoryOnDebut.get(i).getTotalHospitalizationPrice();
+					counterH++;
 				}	
 			}
 			for(int i = 0; i<otherServices.size(); i++){
-				if((otherServices.get(i).getDate().getDay() > startingDay && otherServices.get(i).getDate().getDay() < finalDay) && (otherServices.get(i).getDate().getMonth() > startingMonth && otherServices.get(i).getDate().getMonth() < finalMonth) && (otherServices.get(i).getDate().getYear() > startingYear && otherServices.get(i).getDate().getYear() < finalYear) ){
+				if((otherServices.get(i).getDate().getDay() >= startingDay && otherServices.get(i).getDate().getDay() <= finalDay) && (otherServices.get(i).getDate().getMonth() >= startingMonth && otherServices.get(i).getDate().getMonth() <= finalMonth) && (otherServices.get(i).getDate().getYear() >= startingYear && otherServices.get(i).getDate().getYear() <= finalYear) ){
 					totalIncomeS += otherServices.get(i).getCost();
+					counterS++;
 				}
 				
 			}
 			totalIncome = totalIncomeH + totalIncomeS;
-			week = ((startingDay - finalDay)+((startingMonth-finalMonth)*30)+((startingYear-finalYear)*360));
-			averageIncome = totalIncome/week;
+			averageIncome = totalIncome/(double)(counterS + counterH );
 			return averageIncome;
 		}
 		///////////////////////////////////////////////////////////////////////////
@@ -441,49 +533,55 @@ public class Veterinary
 			return averageIncome;
 		}
 		*/
+		/**
+		 * Description: This method allows to show the services 
+		 * @param startingDay The param must be not null
+		 * @param startingMonth The param must be not null
+		 * @param startingYear The param must be not null
+		 * @param finalDay The param must be not null
+		 * @param finalMonth The param must be not null
+		 * @param finalYear The param must be not null
+		 * @return A message with the services borrowed The param must be not null
+		 */
 		public String reportInAspecificWeek(int startingDay, int startingMonth, int startingYear, int finalDay, int finalMonth, int finalYear){
 			String msg = "";
 			for(int i = 0; i<otherServices.size(); i++){
-				if((otherServices.get(i).getDate().getDay() > startingDay && otherServices.get(i).getDate().getDay() < finalDay) && (otherServices.get(i).getDate().getMonth() > startingMonth && otherServices.get(i).getDate().getMonth() < finalMonth) && (otherServices.get(i).getDate().getYear() > startingYear && otherServices.get(i).getDate().getYear() < finalYear) ){
+				if((otherServices.get(i).getDate().getDay() >= startingDay && otherServices.get(i).getDate().getDay() <= finalDay) && (otherServices.get(i).getDate().getMonth() >= startingMonth && otherServices.get(i).getDate().getMonth() <= finalMonth) && (otherServices.get(i).getDate().getYear() >= startingYear && otherServices.get(i).getDate().getYear() <= finalYear) ){
 					msg += otherServices.get(i).getName();
 				}
-			
-			
+				else {
+					msg = "no hay nada en ese dia";
+				}
 			}
 			return msg;
+		}	
+		// ArrayList
+		/**
+		 * description: This method allows to get the clients registered on the veterinary list
+		 * @return Veterinary clients registered list
+		 */
+		public ArrayList<Clients> getClientRegistrationOnDebut() {
+			return this.clientRegistrationOnDebut;
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		/*
-		public double averageIncomeInASpecificWeek(){
-			double averageIncome = 0;
-			
-			return averageIncome;
+		/**
+		 * description: This method allows to get the pets registered on the veterinary list
+		 * @return Veterinary pets registered list
+		 */
+		public ArrayList<Pets> getPetRegistrationOnDebut() {
+			return this.petRegistrationOnDebut;
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-	*/
-	
-	/*
-	public String calculateIncomeByServices(){
-		String value = "";
-		for(int i = 0; i<otherServices.size(); i++){
-			value += otherServices.get(i).getName();
+		/**
+		 * description: This method allows to get the veterinary clinic History list
+		 * @return Veterinary clinic history list
+		 */
+		public ArrayList<ClinicHistory> getClinicHistoryOnDebut() {
+			return this.clinicHistoryOnDebut;
 		}
-		return value;
-	}
-	*/
-	
+		/**
+		 * description: This method allows to get the limited rooms list
+		 * @return Veterinary limited rooms list
+		 */
+		public MiniRooms[] getMiniRoomsOnDebut() {
+			return this.miniRoomsOnDebut;
+		}
 }

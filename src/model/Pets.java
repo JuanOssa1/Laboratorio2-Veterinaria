@@ -10,17 +10,20 @@ public class Pets {
 	private String animalType;
 	private int age;
 	private double weight;
+	private double height;
 	private long hospitalizationValue;
+	private String id;
 	// Association attributes
 	private ClinicHistory petClinicHistory;
 
 	// builder class Pets (will be called in the main class)
-	public Pets(String name, String animalType, int age, double weight, double height) {
+	public Pets(String name, String animalType, int age, double weight, double height, String id) {
 		this.name = name;
 		this.animalType = animalType;
 		this.age = age;
 		this.weight = weight;
 		this.height = height;
+		this.id = id;
 
 		switch (this.animalType) {
 		case CATITO:
@@ -75,81 +78,58 @@ public class Pets {
 
 		petClinicHistory = null;
 	}
+	/**
+	*Description This method allows to calculate the body mass index for a pet.
+	*pre: The pet was created before and its attributes height and weight are not null neither height must be zero.
+	*post: The BMI is calculated.
+	*@return The pet body mass index. Returns -1 if the height is zero  due to the division on zero does not exist.
+	*/
 	public double calculateBMI(){
 		double BMI = 0;
-		BMI = (weight)/(height * height);
+		if(height != 0) {
+			BMI = (weight)/(height * height);
+		}
+		else{
+			BMI = -1;
+		}
 		return BMI;
 	}
 
-	/*
-	 * public void createClinicHistory(boolean state, String symptom, String
-	 * diagnosis, Date date, Pets petRequiredOnDebut, Clients
-	 * clientRequiredOnDebut, long totalHospitalizationPrice) {
-	 * this.petClinicHistory = new ClinicHistory(state, symptom, diagnosis,
-	 * date, petRequiredOnDebut, clientRequiredOnDebut,
-	 * totalHospitalizationPrice); }
+	/**
+	 * Description: This method allows to set a clinic history to a pet
+	 * pre: The clinic history was created before
+	 * post: The clinic history is added to a pet
 	 */
-	/*
-	 * public void updateClinicHistory(boolean state, String symptom, String
-	 * diagnosis, Pets petRequiredOnDebut, Clients clientRequiredOnDebut) {
-	 * 
-	 * this.petClinicHistory.setState(state);
-	 * this.petClinicHistory.setSymptom(newSymptom); this.petClinicHistory.se
-	 * this.petClinicHistory this.petClinicHistory this.petClinicHistory }
-	 */
-	// Setters that allows to change variable information in a future
-	public void setName(String newName) {
-		this.name = newName;
-	}
-
-	public void setAnimalType(String newAnimalType) {
-		this.animalType = newAnimalType;
-	}
-
-	public void setAge(int newAge) {
-		this.age = newAge;
-	}
-
-	public void setWeight(double newWeight) {
-		this.weight = newWeight;
-	}
-	public void setHeight(double newHeight) {
-		this.weight = newHeight;
-	}
-
-	public void setHospitalizationValue(long newHospitalizationValue) {
-		this.hospitalizationValue = newHospitalizationValue;
-	}
-
 	public void setClinicHistory(ClinicHistory newClinicHistory) {
 		this.petClinicHistory = newClinicHistory;
 	}
-
 	// Gets that allows to use the information of the attributes in another
 	// class
+	/**
+	 * Description: This method allows to get the name of the pet to use it in another class if is needed 
+	 * @return The name of a pet
+	 */
 	public String getName() {
 		return this.name;
 	}
-
+	/**
+	 * Description: This method allows to get the animal type of a pet to use it in another class if is needed 
+	 * @return The animal type of a pet 
+	 */
 	public String getAnimalType() {
 		return this.animalType;
 	}
-
-	public int getAge() {
-		return this.age;
-	}
-
-	public double getWeight() {
-		return this.weight;
-	}
-	public double getHeight(){
-		return this.height;
-	}
-
+	/**
+	 * Description: This method allows to get the clinic history of a pet to use it in another class if is needed 
+	 * @return The clinic history of a pet
+	 */
 	public ClinicHistory getPetClinic() {
 		return this.petClinicHistory;
 	}
-
+	/**
+	 * Description: This method allows to get the cost of the hospitalization of a pet to use it in another class if is needed 
+	 * @return The hospitalization cost of the pet
+	 */
 	public long getHospitalizationValue() {
 		return this.hospitalizationValue;
 	}

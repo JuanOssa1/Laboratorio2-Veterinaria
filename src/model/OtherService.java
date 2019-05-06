@@ -35,7 +35,6 @@ public class OtherService
 		else if(name.equals("5")) {
 			this.name = DENTALPROPHYLAXIS;
 		}
-		
 		if(name.equals("1")){
 			this.cost = PETWASHVETCOST;
 		}
@@ -51,38 +50,29 @@ public class OtherService
 		else if(name.equals("5")){
 			this.cost = DENTALPROPHYLAXISCOST;
 		}
-		/*
-		if(name == PETWASHVET){
-			cost = PETWASHVETCOST;
-		}
-		else if(name == PETWASHHOME ){
-			cost = PETWASHHOMECOST;
-		}
-		else if(name == NAILCUTTING){
-			cost = NAILCUTTINGCOST;
-		}
-		else if(name == VACCINEAPPLICATION){
-			cost = VACCINEAPPLICATIONCOST;
-		}
-		*/
 		  this.date = date;
 		  this.idPet = idPet;
 		  this.idClient = idClient;
-
-		}
+	}
+	/**
+	 * Description: This method allows to get the name of a service to use it in another class if is needed 
+	 * @return The name of the service
+	 */
 		public String getName(){
 			return name;
 		}
-		public void setName(String newName){
-			name = newName;
-		}
+		/**
+		 * Description: This method allows to get the cost of a service to use it in another class if is needed 
+		 * @return The cost of the service
+		 */
 		public double getCost(){
 			return cost; 
 		}
-		public void setCost(double newCost){
-			cost = newCost;
-		}
+		/**
+		 * Description: This method allows to get the date of a service when was realized to use it in another class if is needed 
+		 * @return The date of the service realization
+		 */
 		public Date getDate(){
 			return date;
-		}
+		}	
 }
