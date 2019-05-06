@@ -18,10 +18,15 @@ public class Main {
 
 	public void init() {
 	
-		Date date = new Date(12, 12, 2018);
-		Date date1 = new Date(11, 11, 2011);
+		Date date = new Date(5, 4, 2019);
+		Date date1 = new Date(4, 5, 2019);
+		Date date2 = new Date(3, 3, 2019);
 		happypet = new Veterinary("happypet");
 		happypet.registerClientAndFirstPet("Karen", "123456", "Calle siempre viva", "325461", "Horus",Pets.DOGTITO, 2, 38.5, 36.3, "123456");
+		happypet.registerClientAndFirstPet("Shrek", "12345678", "Calle siempre viva", "32546133", "Stromboli",Pets.DOGTITO, 2, 38.5, 36.3, "12345656");
+		happypet.otherServiceRegistration("1", date, "1234", "123456789");
+		happypet.otherServiceRegistration("2", date1, "123456", "333333");
+		happypet.otherServiceRegistration("3", date2, "12345678", "444444");
 		//happypet.registerClientAndFirstPet("Karen", "123456", "Calle siempre viva", "325461", "Horus",Pets.DOGTITO, 2, 38.5, 36.3, 123456);
 		
 		//Registro de una historia clinica
